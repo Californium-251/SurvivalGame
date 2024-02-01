@@ -16,3 +16,12 @@ This game will be quite rudimentary, consisting of just the player and
 continuously spawning enemies in a fixed box. The player will fire projectiles
 at the enemies to deplete their health and eventually kill them. However, if the
 player touches an enemy (or potentially enemy projectile), they will take damage.
+
+
+## User Stories:
+
+- As a user, I want to see all active enemies on screen
+- As a user, I want to fire projectiles at enemies (add more projectiles to screen)
+- As a user, I want to kill enemies to have them disappear
+- As a user, I want to feel punished by touching enemy projectiles
+  - Lose Health/Die
