@@ -25,3 +25,4 @@ player touches an enemy (or potentially enemy projectile), they will take damage
 - As a user, I want to kill enemies to have them disappear
 - As a user, I want to feel punished by touching enemy projectiles
   - Lose Health/Die
+- As a user, I want to be able to move around to dodge enemy projectiles
