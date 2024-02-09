@@ -6,8 +6,12 @@ public class Enemy {
 
 
     public Enemy() {
-        xpos = 0;
-        ypos = 0;
+        this(0, 0);
+    }
+
+    public Enemy(int x, int y) {
+        this.xpos = x;
+        this.ypos = y;
     }
 
     // REQUIRES: Player is on screen
