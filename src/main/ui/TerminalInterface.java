@@ -2,10 +2,10 @@ package ui;
 
 import model.World;
 
-public class Terminal {
+public class TerminalInterface {
     World world;
 
-    public Terminal() {
+    public TerminalInterface() {
         world = new World();
     }
 
