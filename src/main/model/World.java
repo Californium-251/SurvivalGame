@@ -64,4 +64,9 @@ public class World {
     public int getWidth() {
         return width;
     }
+
+    // EFFECTS: returns the center of the current world {x, y}
+    public int[] getCenter() {
+        return new int[] {this.width / 2, this.height / 2};
+    }
 }
