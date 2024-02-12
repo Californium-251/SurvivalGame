@@ -17,8 +17,26 @@ public class Enemy {
     // REQUIRES: Player is on screen
     // MODIFIES: this
     // EFFECTS: updates enemy x and y using enemy AI
-    public void updatePos() {
-        //stub
+    public void updatePos(Player player, World world) {
+        if (player.getX() > xpos && !(world.containsEnemyAt(xpos + 1, ypos))) {
+            xpos++;
+        } else if (player.getX() < xpos && !world.containsEnemyAt(xpos - 1, ypos)) {
+            xpos--;
+        }
+
+        if (player.getY() > ypos && !(world.containsEnemyAt(xpos, ypos + 1))) {
+            ypos++;
+        } else if (player.getY() < ypos && !world.containsEnemyAt(xpos, ypos - 1)) {
+            ypos--;
+        }
+    }
+
+    public int getX() {
+        return this.xpos;
+    }
+
+    public int getY() {
+        return this.ypos;
     }
 
     public void setX(int x) {

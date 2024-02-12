@@ -27,7 +27,7 @@ import java.util.Scanner;
 public class TerminalInterface {
     private World world;
     private Player player;
-    private Scanner inputScanner = new Scanner(System.in);
+    private final Scanner inputScanner = new Scanner(System.in);
 
     private Boolean isGameOver = false;
 
@@ -40,6 +40,12 @@ public class TerminalInterface {
     private static final List<String> LEGAL_INPUTS = new ArrayList<>();
 
     private static final int MAX_HEALTH = 3;
+
+    private static final char ENEMY_ICON = 'E';
+    private static final char PLAYER_ICON = 'P';
+    private static final String EMPTY_TILE = "  ";
+    private static final char PLAYER_FUCKED = 'F';
+
 
     public TerminalInterface() {
         this.init();
@@ -59,6 +65,9 @@ public class TerminalInterface {
         LEGAL_INPUTS.add(ATTACK);
         // make sure this only runs once in the entire program
         // otherwise rework how LEGAL_INPUTS is populated
+
+
+        displayCurrentState();
     }
 
     //MODIFIES: this
@@ -76,12 +85,13 @@ public class TerminalInterface {
 
             }   //purely as a redundancy in case I change input handling in the future
 
-            world.updateAllEnemies();
+            world.updateAllEnemies(player);
 
             updatePlayerState();
 
             displayCurrentState();
             if (isGameOver) {
+                System.out.println("~~~~~~~~ GAME OVER ~~~~~~~~");
                 break;
             }
         }
@@ -95,7 +105,25 @@ public class TerminalInterface {
 
     //EFFECTS: displays the simulation box with player and enemies
     private void displayWorld() {
-        //TODO: implement world display
+        //gonna try the most devious brute-force
+        //optimization is for nerds
+
+        for (int row = 0; row < world.getHeight(); row++) {
+            for (int col = 0; col < world.getWidth(); col++) {
+
+                if (world.containsEnemyAt(row, col) && player.getX() == col && player.getY() == row) {
+                    System.out.print(PLAYER_FUCKED);
+                } else if (player.getX() == col && player.getY() == row) {
+                    System.out.print(PLAYER_ICON);
+                } else if (world.containsEnemyAt(row, col)) {
+                    System.out.print(ENEMY_ICON);
+                } else {
+                    System.out.print(EMPTY_TILE);
+                }
+
+            }
+            System.out.println(); //Creates newline for next row
+        }
     }
 
     //MODIFIES: this
