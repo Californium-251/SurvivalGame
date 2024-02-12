@@ -23,7 +23,7 @@ public class World {
         this.width = w;
     }
 
-    // MODIFIES: instanceOf Enemy
+    // MODIFIES: this
     // EFFECTS: updates all enemies in activeEnemies
     public void updateAllEnemies() {
         //TODO: COMPLETE IMPLEMENTATION
@@ -55,6 +55,17 @@ public class World {
     // EFFECTS: returns whether e is active in the world
     public boolean isActive(Enemy e) {
         return activeEnemies.contains(e);
+    }
+
+    // EFFECTS: returns whether an enemy exists at the given coordinates
+    public boolean containsEnemyAt(int x, int y) {
+        for (Enemy enemy : activeEnemies) {
+            if (enemy.isAt(x, y)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public int getHeight() {

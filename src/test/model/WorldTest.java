@@ -27,7 +27,7 @@ public class WorldTest {
         int midX = world.getWidth()/2;
         int midY = world.getHeight()/2;
 
-        player = new Player(midX, midY);
+        player = new Player(midX, midY, 5);
 
         top = new Enemy(midX, 0);
         bot = new Enemy(midX, world.getHeight()-1);

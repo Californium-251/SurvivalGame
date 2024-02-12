@@ -7,7 +7,7 @@ public class PlayerTest {
 
     @BeforeEach
     public void init() {
-        player = new Player(0, 0);
+        player = new Player(0, 0, 3);
     }
 
 

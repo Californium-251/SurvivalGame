@@ -28,4 +28,9 @@ public class Enemy {
     public void setY(int y) {
         this.ypos = y;
     }
+
+    //EFFECTS: returns whether the enemy is at the specified x and y coordinates
+    public boolean isAt(int x, int y) {
+        return  xpos == x && ypos == y;
+    }
 }

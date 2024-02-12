@@ -1,13 +1,15 @@
 package model;
 
 public class Player {
+    private int health;
 
     private int xpos;
     private int ypos;
 
-    public Player(int x, int y) {
+    public Player(int x, int y, int health) {
         this.xpos = x;
         this.ypos = y;
+        this.health = health;
     }
 
 
@@ -17,6 +19,10 @@ public class Player {
 
     public int getY() {
         return ypos;
+    }
+
+    public int getHealth() {
+        return health;
     }
 
     // MODIFIES: this
@@ -47,5 +53,16 @@ public class Player {
     // EFFECTS: kills all enemies in range of attack
     public void attack(World w) {
         //stub
+    }
+
+    //MODIFIES: this
+    // EFFECTS: decreases health by 1
+    public void takeDamage() {
+        this.health--;
+    }
+
+    //EFFECTS: returns whether or not the player has died
+    public boolean isDead() {
+        return this.health <= 0;
     }
 }
