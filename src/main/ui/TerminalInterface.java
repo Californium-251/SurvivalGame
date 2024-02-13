@@ -111,11 +111,11 @@ public class TerminalInterface {
         for (int row = 0; row < world.getHeight(); row++) {
             for (int col = 0; col < world.getWidth(); col++) {
 
-                if (world.containsEnemyAt(row, col) && player.getX() == col && player.getY() == row) {
+                if (world.containsEnemyAt(col, row) && player.getX() == col && player.getY() == row) {
                     System.out.print(PLAYER_FUCKED);
                 } else if (player.getX() == col && player.getY() == row) {
                     System.out.print(PLAYER_ICON);
-                } else if (world.containsEnemyAt(row, col)) {
+                } else if (world.containsEnemyAt(col, row)) {
                     System.out.print(ENEMY_ICON);
                 } else {
                     System.out.print(EMPTY_TILE);
