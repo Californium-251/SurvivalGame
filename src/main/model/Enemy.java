@@ -18,6 +18,7 @@ public class Enemy {
     // MODIFIES: this
     // EFFECTS: updates enemy x and y using enemy AI
     public void updatePos(Player player, World world) {
+        // Hopefully will be improved at some point
         if (player.getX() > xpos && !(world.containsEnemyAt(xpos + 1, ypos))) {
             xpos++;
         } else if (player.getX() < xpos && !world.containsEnemyAt(xpos - 1, ypos)) {

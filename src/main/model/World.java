@@ -83,11 +83,10 @@ public class World {
     // EFFECTS: removes enemy from the world at the given position,
     //          does nothing if there is no enemy at the given position
     public void killEnemyAt(int x, int y) {
-        //TODO: concurrent modification exception due to removing while parsing.
-        // Instead, give each enemy a dead state that will be targeted by a wiper at the end of method call
-        for (Enemy enemy : activeEnemies) {
-            if (enemy.getX() == x && enemy.getY() == y) {
-                activeEnemies.remove(enemy);
+        for (int i = 0; i < activeEnemies.size(); i++) {
+            if (activeEnemies.get(i).getX() == x && activeEnemies.get(i).getY() == y) {
+                activeEnemies.remove(i);
+                i--;
             }
         }
     }
