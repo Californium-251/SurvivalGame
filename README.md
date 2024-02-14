@@ -23,6 +23,6 @@ player touches an enemy (or potentially enemy projectile), they will take damage
 - As a user, I want to see all active enemies on screen
 - As a user, I want to fire projectiles at enemies (add more projectiles to screen)
 - As a user, I want to kill enemies to have them disappear
-- As a user, I want to feel punished by touching enemy projectiles
+- As a user, I want to feel punished by touching enemies/enemy projectiles
   - Lose Health/Die
-- As a user, I want to be able to move around to dodge enemy projectiles
+- As a user, I want to be able to move around to evade enemies/projectiles
