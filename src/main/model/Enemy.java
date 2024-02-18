@@ -16,20 +16,25 @@ public class Enemy {
 
     // REQUIRES: Player is on screen
     // MODIFIES: this
-    // EFFECTS: updates enemy x and y using enemy AI
-    public void updatePos(Player player, World world) {
+    // EFFECTS: updates enemy x and y using enemy AI, returns true if the enemy moves
+    public Boolean updatePos(Player player, World world) {
         // Hopefully will be improved at some point
         if (player.getX() > xpos && !(world.containsEnemyAt(xpos + 1, ypos))) {
             xpos++;
+            return true;
         } else if (player.getX() < xpos && !world.containsEnemyAt(xpos - 1, ypos)) {
             xpos--;
+            return true;
         }
 
         if (player.getY() > ypos && !(world.containsEnemyAt(xpos, ypos + 1))) {
             ypos++;
+            return true;
         } else if (player.getY() < ypos && !world.containsEnemyAt(xpos, ypos - 1)) {
             ypos--;
+            return true;
         }
+        return false;
     }
 
     public int getX() {
