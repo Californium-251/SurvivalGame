@@ -17,7 +17,7 @@ public class WorldTest {
 
     @BeforeEach
     public void init() {
-        world = new World();
+        world = new World(10, 10);
 
         int midX = world.getWidth()/2;
         int midY = world.getHeight()/2;
