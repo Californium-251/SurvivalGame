@@ -61,7 +61,7 @@ public class Player {
     }
 
     // MODIFIES: w
-    // EFFECTS: kills all enemies in range of attack
+    // EFFECTS: kills all enemies in + shape around player
     public void attack(World w) {
         w.killEnemyAt(this.xpos, this.ypos); //on player
         w.killEnemyAt(this.xpos - 1, this.ypos); //left of player
