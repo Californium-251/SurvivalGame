@@ -20,9 +20,6 @@ public class World {
 
     private List<Enemy> activeEnemies = new LinkedList<>();
 
-    public World() {
-        this(10, 10);
-    }
 
     // EFFECTS: instantiates a World with a given height and width
     //          in tiles.

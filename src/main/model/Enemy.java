@@ -4,11 +4,6 @@ public class Enemy {
     private int xpos;
     private int ypos;
 
-
-    public Enemy() {
-        this(0, 0);
-    }
-
     public Enemy(int x, int y) {
         this.xpos = x;
         this.ypos = y;

@@ -55,7 +55,7 @@ public class TerminalInterface {
     //MODIFIES: this
     //EFFECTS: initializes world and player. Populates LEGAL_INPUTS with required values
     private void init() {
-        world = new World();
+        world = new World(10, 10);
         player = new Player(world.getCenter()[0], world.getCenter()[1], MAX_HEALTH);
 
         LEGAL_INPUTS.add(LEFT);
