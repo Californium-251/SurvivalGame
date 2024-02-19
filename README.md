@@ -21,8 +21,77 @@ player touches an enemy (or potentially enemy projectile), they will take damage
 ## User Stories:
 
 - As a user, I want to see all active enemies on screen
-- As a user, I want to fire projectiles at enemies (add more projectiles to screen)
+- As a user, I want to feel challenged by a world border
+  - The game would not be fun if you were able to just run forever
 - As a user, I want to kill enemies to have them disappear
-- As a user, I want to feel punished by touching enemies/enemy projectiles
+- As a user, I want to feel punished by touching threats
   - Lose Health/Die
-- As a user, I want to be able to move around to evade enemies/projectiles
+- As a user, I want to be able to move around to evade threats
+
+## Game Instructions:
+
+This is you: <br>
+<pre>
+||====================||
+||                    ||
+||                    ||
+||                    ||
+||                    ||
+||                    ||
+||          P         ||
+||                    ||
+||                    ||
+||                    ||
+||                    ||
+||====================||
+</pre>
+
+Your objective: Survive endless hordes of enemies as long as possible.<br>
+</br>
+Enemies ('E') will spawn as soon as you perform one of the 5 commands:
+- Attack: "attack"
+- Move Up: "up"
+- Move Down: "down"
+- Move Left: "left"
+- Move Right: "right"
+
+Enemies will then make one move every time you perform an action. Namely, they will constantly
+try to get closer to you. <br>
+If an enemy touches you, your player icon will turn into an 'F' and you will lose
+1 health point. When your health reaches 0, you die and the game ends.
+<pre>
+||====================||
+||                    ||
+||                    ||
+||                    ||
+||        E E         ||
+||                    ||
+||                    ||
+||                    ||
+||        E F         ||
+||                    ||
+||                    ||
+||====================||
+</pre>
+
+However, you can prevent this by attacking the enemies. Every time you attack,
+a + shape around your player is hit and any enemies in that area will be killed.
+
+<pre>
+||====================||            ||====================||
+||                    ||            ||                    ||
+||                    ||            ||                    ||
+||                    ||            ||                    ||
+||        E E         ||            ||                    ||
+||                    ||            ||        E E         ||
+||          _         ||     -->    ||                    ||
+||        _| |_       ||            ||                    ||
+||       |E F _|      ||            ||          P         ||
+||         |_|        ||            ||                    ||
+||                    ||            ||                    ||
+||====================||            ||====================||
+</pre>
+*Note: the visual + is just for reference, not in the actual game*
+
+Once you kill all enemies on screen, a new wave will appear. Try to survive
+as long as possible.

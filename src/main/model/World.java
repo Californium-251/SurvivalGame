@@ -15,11 +15,10 @@ import java.util.List;
  *    both the player and enemy classes.
  */
 public class World {
-    private int height;
-    private int width;
+    private final int height;
+    private final int width;
 
-    private List<Enemy> activeEnemies = new LinkedList<>();
-
+    private final List<Enemy> activeEnemies = new LinkedList<>();
 
     // EFFECTS: instantiates a World with a given height and width
     //          in tiles.

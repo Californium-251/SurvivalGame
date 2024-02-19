@@ -41,10 +41,13 @@ public class TerminalInterface {
 
     private static final int MAX_HEALTH = 3;
 
-    private static final char ENEMY_ICON = 'E';
-    private static final char PLAYER_ICON = 'P';
+    private static final String ENEMY_ICON = "E ";
+    private static final String PLAYER_ICON = "P ";
     private static final String EMPTY_TILE = "  ";
-    private static final char PLAYER_FUCKED = 'F';
+    private static final String PLAYER_FUCKED = "F ";
+
+    private static final String HORIZONTAL_BORDER = "==";
+    private static final String VERTICAL_BORDER = "||";
 
 
     public TerminalInterface() {
@@ -105,10 +108,13 @@ public class TerminalInterface {
 
     //EFFECTS: displays the simulation box with player and enemies
     private void displayWorld() {
-        //gonna try the most devious brute-force
-        //optimization is for nerds
+        //could be much better in a gui based approach
+
+        displayHorizontalBorder();
 
         for (int row = 0; row < world.getHeight(); row++) {
+            displayVerticalBorderPiece();
+
             for (int col = 0; col < world.getWidth(); col++) {
 
                 if (world.containsEnemyAt(col, row) && player.getX() == col && player.getY() == row) {
@@ -122,8 +128,30 @@ public class TerminalInterface {
                 }
 
             }
+            displayVerticalBorderPiece();
+
             System.out.println(); //Creates newline for next row
         }
+
+        displayHorizontalBorder();
+    }
+
+    //EFFECTS: prints out a single piece of the vertical borders of the world
+    private void displayVerticalBorderPiece() {
+        System.out.print(VERTICAL_BORDER);
+    }
+
+    //EFFECTS: prints out an entire horizontal border of the world
+    private void displayHorizontalBorder() {
+        displayVerticalBorderPiece();
+
+        for (int i = 0; i < world.getWidth(); i++) {
+            System.out.print(HORIZONTAL_BORDER);
+        }
+
+        displayVerticalBorderPiece();
+
+        System.out.println();
     }
 
     //MODIFIES: this
