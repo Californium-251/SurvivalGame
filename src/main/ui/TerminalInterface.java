@@ -1,6 +1,5 @@
 package ui;
 
-import exceptions.InvalidInputException;
 import model.Player;
 import model.World;
 
@@ -82,7 +81,7 @@ public class TerminalInterface {
 
             try {
                 performPlayerAction(in);
-            } catch (InvalidInputException e) {
+            } catch (IllegalArgumentException e) {
                 System.err.println("Invalid input leaked regarding performing player action; action ignored");
                 //if debugging, make sure to check switch case in performPlayerAction()
 
@@ -173,7 +172,7 @@ public class TerminalInterface {
 
     //MODIFIES: this
     //EFFECTS: performs the specified player action
-    private void performPlayerAction(String in) throws InvalidInputException {
+    private void performPlayerAction(String in) throws IllegalArgumentException {
         switch (in) {
             case LEFT: {
                 player.moveLeft(world);
@@ -191,7 +190,7 @@ public class TerminalInterface {
                 player.attack(world);
                 break;
             } default: {
-                throw new InvalidInputException();
+                throw new IllegalArgumentException();
             }
         }
     }
