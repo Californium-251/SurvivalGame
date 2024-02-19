@@ -1,9 +1,5 @@
 package model;
 
-import exceptions.EnemyAlreadyActiveException;
-import exceptions.EnemyOutOfBoundsException;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,7 +26,7 @@ public class World {
 
     // EFFECTS: instantiates a World with a given height and width
     //          in tiles.
-    public World(int h, int w) {
+    public World(int w, int h) {
         this.height = h;
         this.width = w;
     }
