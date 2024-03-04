@@ -1,5 +1,15 @@
 package model;
 
+/*
+ * Enemy
+ * --------------------
+ * This class represents the abstraction of an enemy
+ *
+ * It contains some important information about each enemy, such as their position (and potentially
+ *  in the future their health)
+ *
+ * This class also stores the enemies' behaviour (although this may be moved to a specialized AI class in the future)
+ */
 public class Enemy {
     private int xpos;
     private int ypos;
