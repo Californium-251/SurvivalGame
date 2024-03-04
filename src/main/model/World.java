@@ -1,6 +1,6 @@
 package model;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -18,7 +18,7 @@ public class World {
     private final int height;
     private final int width;
 
-    private final List<Enemy> activeEnemies = new LinkedList<>();
+    private final List<Enemy> activeEnemies = new ArrayList<>();
 
     // EFFECTS: instantiates a World with a given height and width
     //          in tiles.
