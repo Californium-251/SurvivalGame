@@ -1,28 +1,29 @@
-package model;
+package model.tickedEntities;
+
+import model.Player;
+import model.World;
 
 /*
  * Enemy
  * --------------------
  * This class represents the abstraction of an enemy
  *
- * It contains some important information about each enemy, such as their position (and potentially
+ * It contains some important information about each enemy, such as their position (in superclass) (and potentially
  *  in the future their health)
  *
  * This class also stores the enemies' behaviour (although this may be moved to a specialized AI class in the future)
  */
-public class Enemy {
-    private int xpos;
-    private int ypos;
+public class Enemy extends TickedEntity {
 
     public Enemy(int x, int y) {
-        this.xpos = x;
-        this.ypos = y;
+        super(x, y);
     }
 
     // REQUIRES: Player is on screen
     // MODIFIES: this
     // EFFECTS: updates enemy x and y using enemy AI, returns true if the enemy moves
-    public Boolean updatePos(Player player, World world) {
+    @Override
+    public boolean updatePos(Player player, World world) {
         // Hopefully will be improved at some point
         if (player.getX() > xpos && !(world.containsEnemyAt(xpos + 1, ypos))) {
             xpos++;
@@ -40,26 +41,5 @@ public class Enemy {
             return true;
         }
         return false;
-    }
-
-    public int getX() {
-        return this.xpos;
-    }
-
-    public int getY() {
-        return this.ypos;
-    }
-
-    public void setX(int x) {
-        this.xpos = x;
-    }
-
-    public void setY(int y) {
-        this.ypos = y;
-    }
-
-    //EFFECTS: returns whether the enemy is at the specified x and y coordinates
-    public boolean isAt(int x, int y) {
-        return  xpos == x && ypos == y;
     }
 }

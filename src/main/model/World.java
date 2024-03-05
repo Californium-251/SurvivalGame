@@ -1,5 +1,8 @@
 package model;
 
+import model.tickedEntities.Enemy;
+import model.tickedEntities.Trap;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +16,15 @@ import java.util.List;
  *
  * This class contains information about the bounds of the playing field for
  *    both the player and enemy classes.
+ *
+ * This class also stores the lists of enemies and traps on the map.
  */
 public class World {
     private final int height;
     private final int width;
 
     private final List<Enemy> activeEnemies = new ArrayList<>();
+    private final List<Trap> activeTraps = new ArrayList<>(); //TODO: Implement trap update cycle
 
     // EFFECTS: instantiates a World with a given height and width
     //          in tiles.
