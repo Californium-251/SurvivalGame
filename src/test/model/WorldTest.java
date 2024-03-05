@@ -101,7 +101,7 @@ public class WorldTest {
         assertFalse(world.containsEnemyAt(0, world.getHeight()-1));
         assertFalse(world.containsEnemyAt(world.getWidth()-1, world.getHeight()-1));
 
-        world.updateAllEnemies(player);
+        world.tickAllEntities(player);
 
         assertTrue(world.containsEnemyAt(0, 0));
         assertTrue(world.containsEnemyAt(world.getWidth()-1, 0));
@@ -112,7 +112,7 @@ public class WorldTest {
     @Test
     public void updateAllEnemiesSingleEnemyTest() {
         Enemy topClone = new Enemy(top.getX(), top.getY());
-        topClone.updatePos(player, world);
+        topClone.tick(player, world);
 
         int expectedX = topClone.getX();
         int expectedY = topClone.getY();
@@ -120,7 +120,7 @@ public class WorldTest {
         world.spawnEnemy(top);
 
         //method
-        world.updateAllEnemies(player);
+        world.tickAllEntities(player);
 
         //value check
 
@@ -134,8 +134,8 @@ public class WorldTest {
         Enemy topClone = new Enemy(top.getX(), top.getY());
         Enemy leftClone = new Enemy(left.getX(), left.getY());
 
-        topClone.updatePos(player, world);
-        leftClone.updatePos(player, world);
+        topClone.tick(player, world);
+        leftClone.tick(player, world);
 
         int expectedXTop = topClone.getX();
         int expectedYTop = topClone.getY();
@@ -148,7 +148,7 @@ public class WorldTest {
         world.spawnEnemy(left);
 
         //method
-        world.updateAllEnemies(player);
+        world.tickAllEntities(player);
 
         //test values
         assertEquals(expectedXTop, top.getX());
@@ -164,7 +164,7 @@ public class WorldTest {
         world.spawnEnemy(top);
 
         //Method
-        world.updateAllEnemies(outOfBoundsPlayer);
+        world.tickAllEntities(outOfBoundsPlayer);
 
         //Values
         assertEquals(0, top.getY());
@@ -176,7 +176,7 @@ public class WorldTest {
         world.spawnEnemy(bot);
 
         //Method
-        world.updateAllEnemies(outOfBoundsPlayer);
+        world.tickAllEntities(outOfBoundsPlayer);
 
         //Values
         assertEquals(world.getHeight()-1, bot.getY());
@@ -188,7 +188,7 @@ public class WorldTest {
         world.spawnEnemy(left);
 
         //Method
-        world.updateAllEnemies(outOfBoundsPlayer);
+        world.tickAllEntities(outOfBoundsPlayer);
 
         //Values
         assertEquals(0, left.getX());
@@ -200,7 +200,7 @@ public class WorldTest {
         world.spawnEnemy(right);
 
         //Method
-        world.updateAllEnemies(outOfBoundsPlayer);
+        world.tickAllEntities(outOfBoundsPlayer);
 
         //Values
         assertEquals(world.getHeight()-1, right.getX());

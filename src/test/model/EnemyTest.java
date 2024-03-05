@@ -46,38 +46,38 @@ public class EnemyTest {
 
     @Test
     public void updatePosMoveLeftTest() {
-        eTR.updatePos(pCenter, testWorld);
+        eTR.tick(pCenter, testWorld);
 
         assertEquals(testWorld.getWidth()-2, eTR.getX());
     }
 
     @Test
     public void updatePosMoveRightTest() {
-        eTL.updatePos(pCenter, testWorld);
+        eTL.tick(pCenter, testWorld);
 
         assertEquals(1, eTL.getX());
     }
 
     @Test
     public void updatePosMoveDownTest() {
-        eTC.updatePos(pCenter, testWorld);
+        eTC.tick(pCenter, testWorld);
 
         assertEquals(1, eTC.getY());
     }
 
     @Test
     public void updatePosMoveUpTest() {
-        eBC.updatePos(pCenter, testWorld);
+        eBC.tick(pCenter, testWorld);
 
         assertEquals(testWorld.getHeight()-2, eBC.getY());
     }
 
     @Test
     public void updatePosPrioritizesXTest() {
-        eTL.updatePos(pCenter, testWorld);
-        eTC.updatePos(pCenter, testWorld);
-        eTR.updatePos(pCenter, testWorld);
-        eBC.updatePos(pCenter, testWorld);
+        eTL.tick(pCenter, testWorld);
+        eTC.tick(pCenter, testWorld);
+        eTR.tick(pCenter, testWorld);
+        eBC.tick(pCenter, testWorld);
 
         assertEquals(1, eTL.getX());
         assertEquals(0, eTL.getY());
@@ -100,7 +100,7 @@ public class EnemyTest {
         testWorld.spawnEnemy(eBlockingTop);
 
         //Run method
-        assertFalse(eCTR.updatePos(pTop, testWorld));
+        assertFalse(eCTR.tick(pTop, testWorld));
 
         //Test values
         assertEquals(centerX, eCTR.getX());
@@ -113,7 +113,7 @@ public class EnemyTest {
         testWorld.spawnEnemy(eBlockingBot);
 
         //Run method
-        assertFalse(eCTR.updatePos(pBot, testWorld));
+        assertFalse(eCTR.tick(pBot, testWorld));
 
         //Test values
         assertEquals(centerX, eCTR.getX());
@@ -126,7 +126,7 @@ public class EnemyTest {
         testWorld.spawnEnemy(eBlockingRig);
 
         //Run method
-        assertFalse(eCTR.updatePos(pRig, testWorld));
+        assertFalse(eCTR.tick(pRig, testWorld));
 
         //Test values
         assertEquals(centerX, eCTR.getX());
@@ -139,7 +139,7 @@ public class EnemyTest {
         testWorld.spawnEnemy(eBlockingLef);
 
         //Run method
-        assertFalse(eCTR.updatePos(pLef, testWorld));
+        assertFalse(eCTR.tick(pLef, testWorld));
 
         //Test values
         assertEquals(centerX, eCTR.getX());

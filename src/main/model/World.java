@@ -1,7 +1,7 @@
 package model;
 
 import model.tickedEntities.Enemy;
-import model.tickedEntities.Trap;
+import model.tickedEntities.TickedEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +23,7 @@ public class World {
     private final int height;
     private final int width;
 
-    private final List<Enemy> activeEnemies = new ArrayList<>();
-    private final List<Trap> activeTraps = new ArrayList<>(); //TODO: Implement trap update cycle
+    private final List<TickedEntity> activeEntities = new ArrayList<>();
 
     // EFFECTS: instantiates a World with a given height and width
     //          in tiles.
@@ -36,9 +35,9 @@ public class World {
     // MODIFIES: this
     // EFFECTS: updates all enemies in activeEnemies in the order of when they were placed into the list.
     //          If there are no active enemies, spawn a new set of 4, one in each corner of the world.
-    public void updateAllEnemies(Player p) {
+    public void tickAllEntities(Player p) {
         //current spawning mechanics are mid; will probably change at a later stage
-        if (activeEnemies.isEmpty()) {
+        if (!enemyAlive()) {
             spawnEnemy(new Enemy(0, 0));
             spawnEnemy(new Enemy(width - 1, 0));
             spawnEnemy(new Enemy(0, height - 1));
@@ -46,10 +45,23 @@ public class World {
             return;
         }
 
-        for (Enemy enemy : activeEnemies) {
-            enemy.updatePos(p, this);
-            enforceWorldBounds(enemy);
+        for (TickedEntity entity : activeEntities) {
+            entity.tick(p, this);
+
+            if (entity instanceof Enemy) {
+                enforceWorldBounds((Enemy) entity); //casting is ok because we checked Type
+            }
         }
+    }
+
+    // EFFECTS: returns true if any element of activeEntities is an Enemy; otherwise false
+    private boolean enemyAlive() {
+        for (TickedEntity entity : activeEntities) {
+            if (entity instanceof Enemy) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // MODIFIES: e
@@ -74,16 +86,16 @@ public class World {
     // MODIFIES: this
     // EFFECTS: adds e to activeEnemies.
     public void spawnEnemy(Enemy e) {
-        activeEnemies.add(e);
+        activeEntities.add(e);
     }
 
     // MODIFIES: this
     // EFFECTS: removes enemy from the world at the given position,
     //          does nothing if there is no enemy at the given position
     public void killEnemyAt(int x, int y) {
-        for (int i = 0; i < activeEnemies.size(); i++) {
-            if (activeEnemies.get(i).getX() == x && activeEnemies.get(i).getY() == y) {
-                activeEnemies.remove(i);
+        for (int i = 0; i < activeEntities.size(); i++) {
+            if (activeEntities.get(i).getX() == x && activeEntities.get(i).getY() == y) {
+                activeEntities.remove(i);
                 i--;
             }
         }
@@ -91,13 +103,13 @@ public class World {
 
     // EFFECTS: returns whether e is active in the world
     public boolean isActive(Enemy e) {
-        return activeEnemies.contains(e);
+        return activeEntities.contains(e);
     }
 
     // EFFECTS: returns whether an enemy exists at the given coordinates
     public boolean containsEnemyAt(int x, int y) {
-        for (Enemy enemy : activeEnemies) {
-            if (enemy.isAt(x, y)) {
+        for (TickedEntity entity : activeEntities) {
+            if (entity instanceof Enemy && entity.isAt(x, y)) {
                 return true;
             }
         }

@@ -23,7 +23,7 @@ public class Enemy extends TickedEntity {
     // MODIFIES: this
     // EFFECTS: updates enemy x and y using enemy AI, returns true if the enemy moves
     @Override
-    public boolean updatePos(Player player, World world) {
+    public boolean tick(Player player, World world) {
         // Hopefully will be improved at some point
         if (player.getX() > xpos && !(world.containsEnemyAt(xpos + 1, ypos))) {
             xpos++;

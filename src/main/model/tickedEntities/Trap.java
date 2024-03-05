@@ -22,7 +22,7 @@ public class Trap extends TickedEntity {
     // MODIFIES: world
     // EFFECTS: if there is an enemy standing on trap, kill enemy and consume this trap
     @Override
-    public boolean updatePos(Player player, World world) {
+    public boolean tick(Player player, World world) {
         return false; //TODO: IMPLEMENT TRAP AI
     }
 }

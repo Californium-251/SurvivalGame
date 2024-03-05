@@ -35,6 +35,7 @@ public class TerminalInterface {
     private static final String UP = "up";
     private static final String DOWN = "down";
     private static final String ATTACK = "attack";
+    private static final String TRAP = "trap";
 
     private static final List<String> LEGAL_INPUTS = new ArrayList<>();
 
@@ -44,6 +45,7 @@ public class TerminalInterface {
     private static final String PLAYER_ICON = "P ";
     private static final String EMPTY_TILE = "  ";
     private static final String PLAYER_FUCKED = "F ";
+    private static final String TRAP_ICON = "X ";
 
     private static final String HORIZONTAL_BORDER = "==";
     private static final String VERTICAL_BORDER = "||";
@@ -65,6 +67,7 @@ public class TerminalInterface {
         LEGAL_INPUTS.add(UP);
         LEGAL_INPUTS.add(DOWN);
         LEGAL_INPUTS.add(ATTACK);
+        LEGAL_INPUTS.add(TRAP);
         // make sure this only runs once in the entire program
         // otherwise rework how LEGAL_INPUTS is populated
 
@@ -87,7 +90,7 @@ public class TerminalInterface {
 
             }   //purely as a redundancy in case I change input handling in the future
 
-            world.updateAllEnemies(player);
+            world.tickAllEntities(player);
 
             updatePlayerState();
 
@@ -108,7 +111,8 @@ public class TerminalInterface {
     //EFFECTS: displays the simulation box with player and enemies
     private void displayWorld() {
         //could be much better in a gui based approach
-
+        //TODO: MAKE THIS DISPLAY TRAPS
+        //TODO: REWORK TO WORK WITH NEW CHANGES TO WORLD
         displayHorizontalBorder();
 
         for (int row = 0; row < world.getHeight(); row++) {
@@ -188,6 +192,9 @@ public class TerminalInterface {
                 break;
             } case ATTACK: {
                 player.attack(world);
+                break;
+            } case TRAP: {
+                player.placeTrap(world);
                 break;
             } default: {
                 throw new IllegalArgumentException();

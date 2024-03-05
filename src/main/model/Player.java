@@ -80,4 +80,11 @@ public class Player {
     public boolean isDead() {
         return this.health <= 0;
     }
+
+    // MODIFIES: world
+    // EFFECTS: places a trap at the player's current position in world
+    public void placeTrap(World world) {
+        //TODO: ADD FUNCTIONALITY
+        //stub
+    }
 }

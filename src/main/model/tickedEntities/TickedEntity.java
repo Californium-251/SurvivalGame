@@ -21,7 +21,7 @@ public abstract class TickedEntity {
         this.ypos = y;
     }
 
-    abstract boolean updatePos(Player player, World world);
+    public abstract boolean tick(Player player, World world);
 
     public int getX() {
         return this.xpos;
