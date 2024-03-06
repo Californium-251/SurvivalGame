@@ -342,8 +342,12 @@ public class WorldTest {
     void testTickAllEntitiesConsumesCorrectTrap() {
         Trap topCatcher = new Trap(top.getX(), top.getY()+1); //Make sure trap is in path of enemy
 
+        world.spawnEnemy(top);
+
         world.spawnTrap(topCatcher);
         world.spawnTrap(ctrTrap);
+
+
         world.tickAllEntities(player);
 
         assertFalse(world.isActive(top));
