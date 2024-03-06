@@ -284,6 +284,20 @@ public class WorldTest {
     }
 
     @Test
+    void testContainsTrapAt() {
+        assertFalse(world.containsTrapAt(ctrTrap.getX(), ctrTrap.getY()));
+
+        world.spawnTrap(ctrTrap);
+
+        assertTrue(world.containsTrapAt(ctrTrap.getX(), ctrTrap.getY()));
+
+        assertFalse(world.containsTrapAt(ctrTrap.getX()+1, ctrTrap.getY()));
+        assertFalse(world.containsTrapAt(ctrTrap.getX()-1, ctrTrap.getY()));
+        assertFalse(world.containsTrapAt(ctrTrap.getX(), ctrTrap.getY()-1));
+        assertFalse(world.containsTrapAt(ctrTrap.getX(), ctrTrap.getY()+1));
+    }
+
+    @Test
     void testSpawnTrap() {
         assertFalse(world.containsTrapAt(world.getCenter()[0], world.getCenter()[1]));
 
@@ -311,5 +325,29 @@ public class WorldTest {
         world.consumeTrap(ctrTrap);
 
         assertFalse(world.containsTrapAt(world.getCenter()[0], world.getCenter()[1]));
+    }
+
+    @Test
+    void testTickAllEntitiesConsumesTraps() {
+        Trap topCatcher = new Trap(top.getX(), top.getY()+1); //Make sure trap is in path of enemy
+
+        world.spawnTrap(topCatcher);
+        world.tickAllEntities(player);
+
+        assertFalse(world.isActive(top));
+        assertFalse(world.containsTrapAt(topCatcher.getX(), topCatcher.getY()));
+    }
+
+    @Test
+    void testTickAllEntitiesConsumesCorrectTrap() {
+        Trap topCatcher = new Trap(top.getX(), top.getY()+1); //Make sure trap is in path of enemy
+
+        world.spawnTrap(topCatcher);
+        world.spawnTrap(ctrTrap);
+        world.tickAllEntities(player);
+
+        assertFalse(world.isActive(top));
+        assertFalse(world.containsTrapAt(topCatcher.getX(), topCatcher.getY()));
+        assertTrue(world.containsTrapAt(ctrTrap.getX(), ctrTrap.getY()));
     }
 }
