@@ -27,6 +27,9 @@ player touches an enemy (or potentially enemy projectile), they will take damage
 - As a user, I want to feel punished by touching threats
   - Lose Health/Die
 - As a user, I want to be able to move around to evade threats
+- As a user, I want to be able to place an arbitrary amount of traps into the world
+- As a user, I want to be able to save my current game to the file
+- As a user, I want to be able to reload a previously saved game from file and continue where I left off
 
 ## Game Instructions:
 
