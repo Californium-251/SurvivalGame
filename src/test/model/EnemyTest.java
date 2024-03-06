@@ -1,6 +1,6 @@
 package model;
 
-import model.tickedEntities.Enemy;
+import model.entities.Enemy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

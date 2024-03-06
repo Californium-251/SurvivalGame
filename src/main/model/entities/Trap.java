@@ -1,4 +1,4 @@
-package model.tickedEntities;
+package model.entities;
 
 import model.Player;
 import model.World;
@@ -23,6 +23,12 @@ public class Trap extends TickedEntity {
     // EFFECTS: if there is an enemy standing on trap, kill enemy and consume this trap
     @Override
     public boolean tick(Player player, World world) {
-        return false; //TODO: IMPLEMENT TRAP AI
+        if (world.containsEnemyAt(this.xpos, this.ypos)) {
+            world.killEnemyAt(this.xpos, this.ypos);
+            world.consumeTrap(this);
+            return true;
+        }
+
+        return false;
     }
 }

@@ -1,7 +1,7 @@
 package model;
 
-import model.tickedEntities.Enemy;
-import model.tickedEntities.TickedEntity;
+import model.entities.Enemy;
+import model.entities.Trap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +17,14 @@ import java.util.List;
  * This class contains information about the bounds of the playing field for
  *    both the player and enemy classes.
  *
- * This class also stores the lists of enemies and traps on the map.
+ * This class is also where each enemy and trap is stored.
  */
 public class World {
     private final int height;
     private final int width;
 
-    private final List<TickedEntity> activeEntities = new ArrayList<>();
+    private final List<Enemy> activeEnemies = new ArrayList<>();
+    private final List<Trap> activeTraps = new ArrayList<>();
 
     // EFFECTS: instantiates a World with a given height and width
     //          in tiles.
@@ -33,35 +34,46 @@ public class World {
     }
 
     // MODIFIES: this
-    // EFFECTS: updates all enemies in activeEnemies in the order of when they were placed into the list.
-    //          If there are no active enemies, spawn a new set of 4, one in each corner of the world.
+    // EFFECTS: updates all non-player objects on screen
     public void tickAllEntities(Player p) {
+        updateAllEnemies(p);
+        updateAllTraps(p);
+        updateEnemySpawnCycle();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: If there are no active enemies, spawn a new set of 4, one in each corner of the world.
+    private void updateEnemySpawnCycle() {
         //current spawning mechanics are mid; will probably change at a later stage
-        if (!enemyAlive()) {
+        if (activeEnemies.isEmpty()) {
             spawnEnemy(new Enemy(0, 0));
             spawnEnemy(new Enemy(width - 1, 0));
             spawnEnemy(new Enemy(0, height - 1));
             spawnEnemy(new Enemy(width - 1, height - 1));
-            return;
-        }
-
-        for (TickedEntity entity : activeEntities) {
-            entity.tick(p, this);
-
-            if (entity instanceof Enemy) {
-                enforceWorldBounds((Enemy) entity); //casting is ok because we checked Type
-            }
         }
     }
 
-    // EFFECTS: returns true if any element of activeEntities is an Enemy; otherwise false
-    private boolean enemyAlive() {
-        for (TickedEntity entity : activeEntities) {
-            if (entity instanceof Enemy) {
-                return true;
+    // MODIFIES: this
+    // EFFECTS: updates all enemies in activeEnemies in the order of when they were placed into the list.
+    private void updateAllEnemies(Player p) {
+        for (Enemy enemy : activeEnemies) {
+            enemy.tick(p, this);
+            enforceWorldBounds(enemy);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: updates all traps in activeTraps in the order of when they were placed.
+    private void updateAllTraps(Player p) {
+        Trap curTrap;
+        for (int i = 0; i < activeTraps.size(); i++) {
+            curTrap = activeTraps.get(i);
+            boolean caughtEnemy = curTrap.tick(p, this);
+
+            if (caughtEnemy) {
+                i--;
             }
         }
-        return false;
     }
 
     // MODIFIES: e
@@ -86,34 +98,54 @@ public class World {
     // MODIFIES: this
     // EFFECTS: adds e to activeEnemies.
     public void spawnEnemy(Enemy e) {
-        activeEntities.add(e);
+        activeEnemies.add(e);
     }
 
     // MODIFIES: this
     // EFFECTS: removes enemy from the world at the given position,
     //          does nothing if there is no enemy at the given position
     public void killEnemyAt(int x, int y) {
-        for (int i = 0; i < activeEntities.size(); i++) {
-            if (activeEntities.get(i).getX() == x && activeEntities.get(i).getY() == y) {
-                activeEntities.remove(i);
+        for (int i = 0; i < activeEnemies.size(); i++) {
+            if (activeEnemies.get(i).getX() == x && activeEnemies.get(i).getY() == y) {
+                activeEnemies.remove(i);
                 i--;
             }
         }
     }
 
+    // REQUIRES: 0 <= x < width,
+    //           0 <= y < height
+    // MODIFIES: this
+    // EFFECTS: spawns a trap at the given x and y coordinates
+    public void spawnTrap(int x, int y) {
+        Trap newTrap = new Trap(x, y);
+
+        activeTraps.add(newTrap);
+    }
+
     // EFFECTS: returns whether e is active in the world
     public boolean isActive(Enemy e) {
-        return activeEntities.contains(e);
+        return activeEnemies.contains(e);
     }
 
     // EFFECTS: returns whether an enemy exists at the given coordinates
     public boolean containsEnemyAt(int x, int y) {
-        for (TickedEntity entity : activeEntities) {
-            if (entity instanceof Enemy && entity.isAt(x, y)) {
+        for (Enemy enemy : activeEnemies) {
+            if (enemy.isAt(x, y)) {
                 return true;
             }
         }
 
+        return false;
+    }
+
+    // EFFECTS: returns whether a trap exists at the given coordinates
+    public boolean containsTrapAt(int x, int y) {
+        for (Trap t : activeTraps) {
+            if (t.isAt(x, y)) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -128,5 +160,9 @@ public class World {
     // EFFECTS: returns the center of the current world {x, y}
     public int[] getCenter() {
         return new int[] {this.width / 2, this.height / 2};
+    }
+
+    public void consumeTrap(Trap trap) {
+        activeTraps.remove(trap); //MAKE SURE THIS IS BASED ON OBJECT ID AND NOT ANY EQUALS BULLSHIT
     }
 }

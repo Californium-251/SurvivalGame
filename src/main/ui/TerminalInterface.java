@@ -111,8 +111,6 @@ public class TerminalInterface {
     //EFFECTS: displays the simulation box with player and enemies
     private void displayWorld() {
         //could be much better in a gui based approach
-        //TODO: MAKE THIS DISPLAY TRAPS
-        //TODO: REWORK TO WORK WITH NEW CHANGES TO WORLD
         displayHorizontalBorder();
 
         for (int row = 0; row < world.getHeight(); row++) {
@@ -126,6 +124,8 @@ public class TerminalInterface {
                     System.out.print(PLAYER_ICON);
                 } else if (world.containsEnemyAt(col, row)) {
                     System.out.print(ENEMY_ICON);
+                } else if (world.containsTrapAt(col, row)) {
+                    System.out.print(TRAP_ICON);
                 } else {
                     System.out.print(EMPTY_TILE);
                 }

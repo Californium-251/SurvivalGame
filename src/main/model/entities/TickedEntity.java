@@ -1,4 +1,4 @@
-package model.tickedEntities;
+package model.entities;
 
 import model.Player;
 import model.World;

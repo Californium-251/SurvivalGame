@@ -84,7 +84,6 @@ public class Player {
     // MODIFIES: world
     // EFFECTS: places a trap at the player's current position in world
     public void placeTrap(World world) {
-        //TODO: ADD FUNCTIONALITY
-        //stub
+        world.spawnTrap(this.xpos, this.ypos);
     }
 }
