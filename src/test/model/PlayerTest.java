@@ -192,4 +192,11 @@ public class PlayerTest {
 
         assertTrue(player.isDead());
     }
+
+    @Test
+    void testPlaceTrap() {
+        player.placeTrap(emptyWorld);
+
+        assertTrue(emptyWorld.containsTrapAt(player.getX(), player.getY()));
+    }
 }

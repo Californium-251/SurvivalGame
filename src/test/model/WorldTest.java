@@ -1,6 +1,7 @@
 package model;
 
 import model.entities.Enemy;
+import model.entities.Trap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,8 @@ public class WorldTest {
     Enemy left;
     Enemy right;
 
+    Trap ctrTrap;
+
     @BeforeEach
     public void init() {
         world = new World(10, 10);
@@ -29,6 +32,8 @@ public class WorldTest {
         bot = new Enemy(midX, world.getHeight()-1);
         left = new Enemy(0, midY);
         right = new Enemy(world.getWidth()-1, midY);
+
+        ctrTrap = new Trap(midX, midY);
     }
 
     @Test
@@ -276,5 +281,35 @@ public class WorldTest {
 
         assertEquals(3, OddWOddH.getCenter()[0]);
         assertEquals(6, OddWOddH.getCenter()[1]);
+    }
+
+    @Test
+    void testSpawnTrap() {
+        assertFalse(world.containsTrapAt(world.getCenter()[0], world.getCenter()[1]));
+
+        world.spawnTrap(ctrTrap);
+
+        assertTrue(world.containsTrapAt(world.getCenter()[0], world.getCenter()[1]));
+    }
+
+    // REQUIRES: no enemy is at center pos on map
+    @Test
+    void testTrapPersistence() {
+        world.spawnTrap(ctrTrap);
+
+        world.tickAllEntities(player);
+
+        assertTrue(world.containsTrapAt(world.getCenter()[0], world.getCenter()[1]));
+    }
+
+    @Test
+    void testConsumeTrap() {
+        world.spawnTrap(ctrTrap);
+
+        assertTrue(world.containsTrapAt(world.getCenter()[0], world.getCenter()[1]));
+
+        world.consumeTrap(ctrTrap);
+
+        assertFalse(world.containsTrapAt(world.getCenter()[0], world.getCenter()[1]));
     }
 }

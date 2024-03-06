@@ -1,5 +1,7 @@
 package model;
 
+import model.entities.Trap;
+
 /*
  * Player
  * --------------
@@ -84,6 +86,6 @@ public class Player {
     // MODIFIES: world
     // EFFECTS: places a trap at the player's current position in world
     public void placeTrap(World world) {
-        world.spawnTrap(this.xpos, this.ypos);
+        world.spawnTrap(new Trap(this.getX(), this.getY()));
     }
 }

@@ -113,14 +113,10 @@ public class World {
         }
     }
 
-    // REQUIRES: 0 <= x < width,
-    //           0 <= y < height
     // MODIFIES: this
     // EFFECTS: spawns a trap at the given x and y coordinates
-    public void spawnTrap(int x, int y) {
-        Trap newTrap = new Trap(x, y);
-
-        activeTraps.add(newTrap);
+    public void spawnTrap(Trap trap) {
+        activeTraps.add(trap);
     }
 
     // EFFECTS: returns whether e is active in the world
@@ -162,6 +158,8 @@ public class World {
         return new int[] {this.width / 2, this.height / 2};
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes the given trap from the world
     public void consumeTrap(Trap trap) {
         activeTraps.remove(trap); //MAKE SURE THIS IS BASED ON OBJECT ID AND NOT ANY EQUALS BULLSHIT
     }

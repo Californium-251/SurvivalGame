@@ -1,47 +1,14 @@
-package model;
+package model.entities;
 
-import model.entities.Enemy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class EnemyTest {
-    public World testWorld;
-
-    public int centerX;
-    public int centerY;
-
-    public Player pCenter;
-
-    Player pTop;
-    Player pBot;
-    Player pLef;
-    Player pRig;
-
-    public Enemy eCTR;
-    public Enemy eTL;
-    public Enemy eTC;
-    public Enemy eTR;
-    public Enemy eBC;
+public class EnemyTest extends TickedEntityTest {
 
     @BeforeEach
     public void init() {
-        testWorld = new World(10, 10); //Define size manually to avoid issues in tests where enemies may overlap
-
-        centerX = testWorld.getCenter()[0];
-        centerY = testWorld.getCenter()[1];
-
-        pCenter = new Player(testWorld.getCenter()[0], testWorld.getCenter()[1], 3);
-        pTop = new Player(centerX, 0, 3);
-        pBot = new Player(centerX, testWorld.getHeight()-1, 3);
-        pLef = new Player(0, centerY, 3);
-        pRig = new Player(testWorld.getWidth()-1, centerY, 3);
-
-        eCTR = new Enemy(centerX,centerY);
-        eTL = new Enemy(0, 0);
-        eTC = new Enemy(centerX, 0);
-        eTR = new Enemy(testWorld.getWidth()-1, 0);
-        eBC = new Enemy(centerX, testWorld.getHeight()-1);
+        super.init();
     }
 
     @Test
@@ -145,14 +112,4 @@ public class EnemyTest {
         assertEquals(centerX, eCTR.getX());
         assertEquals(centerY, eCTR.getY());
     }
-
-    @Test
-    public void isAtAccuracyTest() {
-        assertTrue(eCTR.isAt(centerX, centerY));
-        assertTrue(eTL.isAt(0, 0));
-
-        assertFalse(eBC.isAt(0, 0));
-        assertFalse(eTR.isAt(centerX, 0));
-    }
-
 }
