@@ -1,6 +1,7 @@
 package model;
 
 import model.entities.Enemy;
+import model.entities.TickedEntity;
 import model.entities.Trap;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -191,5 +192,29 @@ public class World implements Writable {
         }
 
         return jsonArray;
+    }
+
+    //EFFECTS: returns the number of enemies in the world
+    public int numEnemies() {
+        return activeEnemies.size();
+    }
+
+    //EFFECTS: returns the number of traps in the world
+    public int numTraps() {
+        return activeTraps.size();
+    }
+
+    //EFFECTS: returns a list with all the entities in the world
+    public List<TickedEntity> getEntities() {
+        List<TickedEntity> result = new ArrayList<>();
+
+        for (Enemy e : activeEnemies) {
+            result.add(e);
+        }
+        for (Trap t : activeTraps) {
+            result.add(t);
+        }
+
+        return result;
     }
 }
