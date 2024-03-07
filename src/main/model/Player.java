@@ -1,6 +1,8 @@
 package model;
 
 import model.entities.Trap;
+import org.json.JSONObject;
+import persistence.Writable;
 
 /*
  * Player
@@ -13,7 +15,7 @@ import model.entities.Trap;
  * This also contains a number of methods that the player can use to
  *    help them survive
  */
-public class Player {
+public class Player implements Writable {
     private int health;
 
     private int xpos;
@@ -87,5 +89,14 @@ public class Player {
     // EFFECTS: places a trap at the player's current position in world
     public void placeTrap(World world) {
         world.spawnTrap(new Trap(this.getX(), this.getY()));
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("health", this.getHealth());
+        json.put("x", this.getX());
+        json.put("y", this.getY());
+        return json;
     }
 }

@@ -2,6 +2,9 @@ package model;
 
 import model.entities.Enemy;
 import model.entities.Trap;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +22,7 @@ import java.util.List;
  *
  * This class is also where each enemy and trap is stored.
  */
-public class World {
+public class World implements Writable {
     private final int height;
     private final int width;
 
@@ -36,9 +39,10 @@ public class World {
     // MODIFIES: this
     // EFFECTS: updates all non-player objects on screen
     public void tickAllEntities(Player p) {
+        updateEnemySpawnCycle(); //pre trap check
         updateAllEnemies(p);
         updateAllTraps(p);
-        updateEnemySpawnCycle();
+        updateEnemySpawnCycle(); //post trap check
     }
 
     // MODIFIES: this
@@ -162,5 +166,30 @@ public class World {
     // EFFECTS: removes the given trap from the world
     public void consumeTrap(Trap trap) {
         activeTraps.remove(trap); //MAKE SURE THIS IS BASED ON OBJECT ID AND NOT ANY EQUALS BULLSHIT
+    }
+
+    // EFFECTS: returns a JSONObject with the world data
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("height", this.height);
+        json.put("width", this.width);
+
+        json.put("entities", entitiesToJson());
+        return json;
+    }
+
+    // EFFECTS: returns the entities in the world as a single JSON array
+    private JSONArray entitiesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Enemy e : activeEnemies) {
+            jsonArray.put(e.toJson());
+        }
+        for (Trap t : activeTraps) {
+            jsonArray.put(t.toJson());
+        }
+
+        return jsonArray;
     }
 }

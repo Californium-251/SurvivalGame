@@ -2,6 +2,8 @@ package model.entities;
 
 import model.Player;
 import model.World;
+import org.json.JSONObject;
+import persistence.Writable;
 
 /*
  * TickedEntity
@@ -12,7 +14,7 @@ import model.World;
  *
  * Also contains universal data such as xpos and ypos
  */
-public abstract class TickedEntity {
+public abstract class TickedEntity implements Writable {
     protected int xpos;
     protected int ypos;
 
@@ -42,5 +44,16 @@ public abstract class TickedEntity {
     //EFFECTS: returns whether the enemy is at the specified x and y coordinates
     public boolean isAt(int x, int y) {
         return  xpos == x && ypos == y;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+
+        json.put("x", this.getX());
+        json.put("y", this.getY());
+        json.put("type", this.getClass());
+
+        return json;
     }
 }

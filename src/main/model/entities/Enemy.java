@@ -2,6 +2,8 @@ package model.entities;
 
 import model.Player;
 import model.World;
+import org.json.JSONObject;
+import persistence.Writable;
 
 /*
  * Enemy

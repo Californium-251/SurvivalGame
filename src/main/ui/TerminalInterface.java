@@ -2,7 +2,11 @@ package ui;
 
 import model.Player;
 import model.World;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -24,6 +28,10 @@ import java.util.Scanner;
  *
  */
 public class TerminalInterface {
+    private static final String JSON_FILEPATH = "./data/savedGame.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
     private World world;
     private Player player;
     private final Scanner inputScanner = new Scanner(System.in);
@@ -36,6 +44,7 @@ public class TerminalInterface {
     private static final String DOWN = "down";
     private static final String ATTACK = "attack";
     private static final String TRAP = "trap";
+    private static final String SAVE = "save";
 
     private static final List<String> LEGAL_INPUTS = new ArrayList<>();
 
@@ -52,27 +61,77 @@ public class TerminalInterface {
 
 
     public TerminalInterface() {
+        jsonWriter = new JsonWriter(JSON_FILEPATH);
+        jsonReader = new JsonReader(JSON_FILEPATH);
+
+        if (playerWantsNewGame()) {
+            world = new World(10, 10);
+            player = new Player(5, 5, MAX_HEALTH);
+        } else {
+            loadGame();
+        }
+
         this.init();
+
+        this.displayCurrentState();
+    }
+
+
+    // EFFECTS: returns true if the player chooses to start a new game
+    private boolean playerWantsNewGame() {
+        System.out.println("Would you like a new game or to load the saved game?");
+        System.out.println("   new game -> Make a new game");
+        System.out.println("   load     -> Load previous save");
+        String input = inputScanner.nextLine();
+
+        if (input.equals("new game")) {
+            return true;
+        } else if (input.equals("load")) {
+            return false;
+        } else {
+            System.out.println("Invalid Input, try again!");
+            return playerWantsNewGame();
+        }
+    }
+
+    //MODIFIES: this
+    //EFFECTS: loads a previously saved game from file
+    private void loadGame() {
+        try {
+            world = jsonReader.readWorld();
+            player = jsonReader.readPlayer();
+            System.out.println("Successfully loaded game from: " + JSON_FILEPATH);
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + JSON_FILEPATH);
+        }
+    }
+
+    //EFFECTS: saves the current game to file
+    private void saveGame() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(player, world);
+            jsonWriter.close();
+            System.out.println("Saved Game!");
+        } catch (FileNotFoundException e) {
+            System.err.println("Unable to write to file: " + JSON_FILEPATH);
+        }
     }
 
 
     //MODIFIES: this
-    //EFFECTS: initializes world and player. Populates LEGAL_INPUTS with required values
+    //EFFECTS: Populates LEGAL_INPUTS with required values
     private void init() {
-        world = new World(10, 10);
-        player = new Player(world.getCenter()[0], world.getCenter()[1], MAX_HEALTH);
-
         LEGAL_INPUTS.add(LEFT);
         LEGAL_INPUTS.add(RIGHT);
         LEGAL_INPUTS.add(UP);
         LEGAL_INPUTS.add(DOWN);
         LEGAL_INPUTS.add(ATTACK);
         LEGAL_INPUTS.add(TRAP);
+        LEGAL_INPUTS.add(SAVE);
         // make sure this only runs once in the entire program
         // otherwise rework how LEGAL_INPUTS is populated
 
-
-        displayCurrentState();
     }
 
     //MODIFIES: this
@@ -83,7 +142,9 @@ public class TerminalInterface {
             in = getNextInput();
 
             try {
-                performPlayerAction(in);
+                if (performPlayerAction(in) == false) {
+                    continue; // we do not want to update anything according to effects clause
+                }
             } catch (IllegalArgumentException e) {
                 System.err.println("Invalid input leaked regarding performing player action; action ignored");
                 //if debugging, make sure to check switch case in performPlayerAction()
@@ -175,8 +236,8 @@ public class TerminalInterface {
     }
 
     //MODIFIES: this
-    //EFFECTS: performs the specified player action
-    private void performPlayerAction(String in) throws IllegalArgumentException {
+    //EFFECTS: performs the specified player action; returns true if game should update
+    private boolean performPlayerAction(String in) throws IllegalArgumentException {
         switch (in) {
             case LEFT: {
                 player.moveLeft(world);
@@ -196,10 +257,14 @@ public class TerminalInterface {
             } case TRAP: {
                 player.placeTrap(world);
                 break;
+            } case SAVE: {
+                saveGame();
+                return false; //we don't want game to update on save
             } default: {
                 throw new IllegalArgumentException();
             }
         }
+        return true; //default method behaviour
     }
 
     //MODIFIES: this
