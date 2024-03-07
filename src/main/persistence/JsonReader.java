@@ -81,7 +81,6 @@ public class JsonReader {
             if (type.equals("class model.entities.Enemy")) {
                 w.spawnEnemy(new Enemy(xpos, ypos));
             } else {
-                assert type.equals("class model.entities.Trap");
                 w.spawnTrap(new Trap(xpos, ypos));
             }
         }
