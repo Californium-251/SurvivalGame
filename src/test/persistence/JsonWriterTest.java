@@ -40,7 +40,7 @@ public class JsonWriterTest extends JsonTest{
 
     @Test
     void testWriterEmptyWorld() {
-        String filepath = "./data/testWriterEmptyWorld";
+        String filepath = "./data/testWriterEmptyWorld.json";
 
         try {
             writer = new JsonWriter(filepath);
@@ -67,7 +67,7 @@ public class JsonWriterTest extends JsonTest{
 
     @Test
     void testWriterGeneralWorld() {
-        String filepath = "./data/testWriterGeneralWorld";
+        String filepath = "./data/testWriterGeneralWorld.json";
 
         String enemyClassString = new Enemy(0, 0).getClass().toString();
         String trapClassString = new Trap(0, 0).getClass().toString();

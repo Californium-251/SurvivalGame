@@ -1,0 +1,29 @@
+{
+    "entities": [
+        {
+            "x": 7,
+            "y": 7,
+            "type": "class model.entities.Enemy"
+        },
+        {
+            "x": 2,
+            "y": 4,
+            "type": "class model.entities.Enemy"
+        },
+        {
+            "x": 4,
+            "y": 4,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 4,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        }
+    ],
+    "width": 10,
+    "height": 9,
+    "x": 5,
+    "health": 3,
+    "y": 2
+}

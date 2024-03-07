@@ -40,8 +40,9 @@ public class World implements Writable {
     // MODIFIES: this
     // EFFECTS: updates all non-player objects on screen
     public void tickAllEntities(Player p) {
-        updateEnemySpawnCycle(); //pre trap check
         updateAllEnemies(p);
+
+        updateEnemySpawnCycle(); //pre trap check
         updateAllTraps(p);
         updateEnemySpawnCycle(); //post trap check
     }
