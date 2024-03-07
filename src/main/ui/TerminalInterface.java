@@ -237,6 +237,7 @@ public class TerminalInterface {
 
     //MODIFIES: this
     //EFFECTS: performs the specified player action; returns true if game should update
+    @SuppressWarnings("methodlength")
     private boolean performPlayerAction(String in) throws IllegalArgumentException {
         switch (in) {
             case LEFT: {
