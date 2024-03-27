@@ -1,29 +1,49 @@
 {
     "entities": [
         {
-            "x": 0,
+            "x": 24,
             "y": 0,
             "type": "class model.entities.Enemy"
         },
         {
-            "x": 9,
+            "x": 55,
             "y": 0,
             "type": "class model.entities.Enemy"
         },
         {
-            "x": 0,
-            "y": 9,
+            "x": 24,
+            "y": 23,
             "type": "class model.entities.Enemy"
         },
         {
-            "x": 9,
-            "y": 9,
+            "x": 55,
+            "y": 23,
             "type": "class model.entities.Enemy"
+        },
+        {
+            "x": 38,
+            "y": 10,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 38,
+            "y": 10,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 38,
+            "y": 10,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 34,
+            "y": 7,
+            "type": "class model.entities.Trap"
         }
     ],
-    "width": 10,
-    "height": 10,
-    "x": 5,
-    "health": 3,
-    "y": 6
+    "width": 80,
+    "height": 24,
+    "x": 31,
+    "health": 85,
+    "y": 7
 }

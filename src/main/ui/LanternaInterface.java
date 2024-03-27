@@ -4,6 +4,10 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
+import com.googlecode.lanterna.gui2.MultiWindowTextGUI;
+import com.googlecode.lanterna.gui2.WindowBasedTextGUI;
+import com.googlecode.lanterna.gui2.dialogs.MessageDialogBuilder;
+import com.googlecode.lanterna.gui2.dialogs.MessageDialogButton;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
@@ -16,11 +20,17 @@ import model.entities.Trap;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/*
+ * GUI Class.
+ *
+ * Heavily inspired by the Snake Console Game provided to us
+ */
 public class LanternaInterface {
     private static final String JSON_FILEPATH = "./data/savedGame.json";
     private JsonWriter jsonWriter;
@@ -30,9 +40,10 @@ public class LanternaInterface {
     private Player player;
 
     private boolean isGameOver = false;
+    private boolean paused = false;
 
     private static final int MAX_HEALTH = 100;
-    private static final long TICKRATE = 1; // ticks/s
+    private static final long TICKRATE = 10; // ticks/s
 
     private static final String ENEMY_ICON = "E ";
     private static final String PLAYER_ICON = "P ";
@@ -56,24 +67,71 @@ public class LanternaInterface {
     private static final KeyStroke RIGHT = new KeyStroke(KeyType.ArrowRight);
     private static final KeyStroke TRAP = new KeyStroke(new Character('t'), false, false);
     private static final KeyStroke ATTACK = new KeyStroke(new Character(' '), false, false);
-    private static final KeyStroke SAVE = new KeyStroke(new Character('s'), true, false);
+    private static final KeyStroke SAVE = new KeyStroke(new Character('s'), false, false);
+    private static final KeyStroke PAUSE = new KeyStroke(KeyType.Escape);
 
     private Set<KeyStroke> legalInputs = new HashSet<>();
 
-
-
-    //
     public void start() throws IOException, InterruptedException {
         initJson();
         initScreen();
-        //TODO: implement saving/loading logic
-        initGame();
+
+        boolean load = displayStartScreen();
+
+        if (load) {
+            loadGame();
+        } else {
+            initNewGame();
+        }
+        addInputs();
 
         beginTicking();
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads the game stored in file
+    private void loadGame() {
+        try {
+            world = jsonReader.readWorld();
+            player = jsonReader.readPlayer();
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + JSON_FILEPATH);
+        }
+        paused = true;
+    }
+
+    //EFFECTS: saves the current game to file
+    private void saveGame() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(player, world);
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            System.err.println("Unable to write to file: " + JSON_FILEPATH);
+        }
+    }
+
+    // EFFECTS: gets the player input on whether or not they want to load
+    //          the game stored in file.
+    private boolean displayStartScreen() {
+        WindowBasedTextGUI startGUI = new MultiWindowTextGUI(screen);
+
+        MessageDialogButton response = new MessageDialogBuilder()
+                .setTitle("Welcome!")
+                .setText("Would you like to load the game from file?")
+                .addButton(MessageDialogButton.Yes)
+                .addButton(MessageDialogButton.No)
+                .build()
+                .showDialog(startGUI);
+
+        if (response == MessageDialogButton.Yes) {
+            return true;
+        }
+        return false;
+    }
+
     //EFFECTS: creates a new world and player at default size and location
-    private void initGame() {
+    private void initNewGame() {
         TerminalSize terminalSize = screen.getTerminalSize();
 
         //TODO: implement saving/loading world & player
@@ -81,8 +139,6 @@ public class LanternaInterface {
         player = new Player(terminalSize.getColumns() / 2,
                 terminalSize.getRows() / 2,
                 MAX_HEALTH);
-
-        addInputs();
     }
 
     // MODIFIES: this
@@ -95,6 +151,7 @@ public class LanternaInterface {
         legalInputs.add(TRAP);
         legalInputs.add(ATTACK);
         legalInputs.add(SAVE);
+        legalInputs.add(PAUSE);
     }
 
     //EFFECTS: initializes screen
@@ -114,7 +171,7 @@ public class LanternaInterface {
     private void beginTicking() throws InterruptedException, IOException {
         while (!isGameOver) {
             tick();
-            Thread.sleep(100L / TICKRATE);
+            Thread.sleep(1000L / TICKRATE);
         }
 
         System.exit(0);
@@ -123,8 +180,10 @@ public class LanternaInterface {
     private void tick() throws IOException {
         handleUserInput();
 
-        world.tickAllEntities(player);
-        updatePlayerState();
+        if (!paused) {
+            world.tickAllEntities(player);
+            updatePlayerState();
+        }
 
         screen.setCursorPosition(new TerminalPosition(0, 0));
         screen.clear();
@@ -154,24 +213,39 @@ public class LanternaInterface {
 
     //EFFECTS: grabs the next input and performs it if it is valid
     private void handleUserInput() throws IOException {
-        //TODO: currently inputs get queued. This would preferably not happen but that's for a later fix
         KeyStroke stroke = screen.pollInput();
 
-        if (stroke == null) {
+        if (stroke == null || !legalInputs.contains(stroke)) {
             return;
         }
 
-        if (!legalInputs.contains(stroke)) {
+        if (stroke.equals(PAUSE)) {
+            togglePause();
             return;
         }
 
-        performPlayerAction(stroke);
+        if (paused) {
+            performPausedPlayerAction(stroke);
+        } else {
+            performUnpausedPlayerAction(stroke);
+        }
+        emptyInputQueue();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: performs player pause menu action, does nothing if not a valid action
+    private void performPausedPlayerAction(KeyStroke action) {
+        if (action.equals(SAVE)) {
+            saveGame();
+        } else if (action.equals(PAUSE)) {
+            togglePause();
+        }
     }
 
     // MODIFIES: player
-    // EFFECTS: performs player action, throws illegalArgumentException if not a valid action
+    // EFFECTS: performs player world action, does nothing if not a valid action
     @SuppressWarnings("methodlength")
-    private void performPlayerAction(KeyStroke action) throws IllegalArgumentException {
+    private void performUnpausedPlayerAction(KeyStroke action) {
         if (action.equals(LEFT)) {
             player.moveLeft(world);
         } else if (action.equals(RIGHT)) {
@@ -184,28 +258,70 @@ public class LanternaInterface {
             player.attack(world);
         } else if (action.equals(TRAP)) {
             player.placeTrap(world);
+        }
+    }
+
+    //EFFECTS: burns through any remaining inputs made sub-tick to prevent annoying buffers
+    private void emptyInputQueue() throws IOException {
+        KeyStroke input = screen.pollInput();
+
+        while (input != null) {
+            input = screen.pollInput();
+        }
+    }
+
+
+
+    //EFFECTS: pauses game if unpaused, unpauses game if paused
+    private void togglePause() {
+        if (paused) {
+            paused = false;
         } else {
-            //TODO: implement save key functionality
-            //saveGame();  throw new IllegalArgumentException();
+            paused = true;
         }
     }
 
     private void renderScene() {
-        //TODO: Implement game over scene
+        if (isGameOver) {
+            drawEndScreen();
+        }
 
         drawHealth();
         drawEntities();
         drawPlayer();
+
+        if (paused) {
+            drawPauseDialog();
+        }
+    }
+
+    //EFFECTS: draws the pause menu to the screen
+    private void drawPauseDialog() {
+        int centerX = world.getWidth() / 2;
+        int centerY = world.getHeight() / 2;
+
+        String pauseString = "GAME PAUSED!";
+        String saveString = "Press S to save";
+
+        drawText(centerX - (pauseString.length() / 2), centerY, pauseString, TextColor.ANSI.CYAN);
+        drawText(centerX - (saveString.length() / 2), centerY + 1, saveString, TextColor.ANSI.CYAN);
+
+    }
+
+    private void drawEndScreen() {
+        WindowBasedTextGUI endGUI = new MultiWindowTextGUI(screen);
+
+        new MessageDialogBuilder()
+                .setTitle("Game over!")
+                .setText("You Died!")
+                .addButton(MessageDialogButton.Close)
+                .build()
+                .showDialog(endGUI);
     }
 
     private void drawHealth() {
-        TextGraphics text = screen.newTextGraphics();
-        text.setForegroundColor(TextColor.ANSI.GREEN);
-        text.putString(1, 0, "Health Remaining: ");
-
-        text = screen.newTextGraphics();
-        text.setForegroundColor(TextColor.ANSI.WHITE);
-        text.putString(19, 0, String.valueOf(player.getHealth()));
+        drawText(1, 0, "Health Remaining: ", TextColor.ANSI.GREEN);
+        drawText(19, 0, String.valueOf(player.getHealth()), TextColor.ANSI.WHITE);
     }
 
     private void drawPlayer() {
@@ -223,18 +339,22 @@ public class LanternaInterface {
 
         for (TickedEntity activeEntity : activeEntities) {
             if (activeEntity instanceof Enemy) {
-                drawPosition(activeEntity, TextColor.ANSI.RED, 'E');
+                drawEntity(activeEntity, TextColor.ANSI.RED, 'E');
             } else if (activeEntity instanceof Trap) {
-                drawPosition(activeEntity, TextColor.ANSI.YELLOW, 'X');
+                drawEntity(activeEntity, TextColor.ANSI.YELLOW, 'X');
             }
         }
     }
 
-    private void drawPosition(TickedEntity activeEntity, TextColor color, char c) {
+    private void drawEntity(TickedEntity activeEntity, TextColor color, char c) {
         TextGraphics text = screen.newTextGraphics();
         text.setForegroundColor(color);
         text.putString(activeEntity.getX(), activeEntity.getY(), String.valueOf(c));
     }
 
-
+    private void drawText(int x, int y, String text, TextColor color) {
+        TextGraphics textGraphics = screen.newTextGraphics();
+        textGraphics.setForegroundColor(color);
+        textGraphics.putString(x, y, text);
+    }
 }
