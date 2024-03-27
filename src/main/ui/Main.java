@@ -1,9 +1,10 @@
 package ui;
 
 public class Main {
-    public static void main(String[] args) {
-        TerminalInterface game = new TerminalInterface();
+    public static void main(String[] args) throws Exception {
+        //TerminalInterface game = new TerminalInterface();
+        LanternaInterface game = new LanternaInterface();
 
-        game.playGame();
+        game.start();
     }
 }

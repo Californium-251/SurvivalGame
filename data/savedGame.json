@@ -1,24 +1,29 @@
 {
     "entities": [
         {
-            "x": 9,
-            "y": 5,
+            "x": 0,
+            "y": 0,
             "type": "class model.entities.Enemy"
         },
         {
-            "x": 6,
-            "y": 2,
-            "type": "class model.entities.Trap"
+            "x": 9,
+            "y": 0,
+            "type": "class model.entities.Enemy"
         },
         {
-            "x": 7,
-            "y": 3,
-            "type": "class model.entities.Trap"
+            "x": 0,
+            "y": 9,
+            "type": "class model.entities.Enemy"
+        },
+        {
+            "x": 9,
+            "y": 9,
+            "type": "class model.entities.Enemy"
         }
     ],
     "width": 10,
     "height": 10,
-    "x": 9,
-    "health": 2,
-    "y": 0
+    "x": 5,
+    "health": 3,
+    "y": 6
 }
