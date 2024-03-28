@@ -1,23 +1,18 @@
 {
     "entities": [
         {
-            "x": 24,
+            "x": 48,
             "y": 0,
             "type": "class model.entities.Enemy"
         },
         {
-            "x": 55,
-            "y": 0,
-            "type": "class model.entities.Enemy"
-        },
-        {
-            "x": 24,
+            "x": 48,
             "y": 23,
             "type": "class model.entities.Enemy"
         },
         {
-            "x": 55,
-            "y": 23,
+            "x": 63,
+            "y": 3,
             "type": "class model.entities.Enemy"
         },
         {
@@ -39,11 +34,276 @@
             "x": 34,
             "y": 7,
             "type": "class model.entities.Trap"
+        },
+        {
+            "x": 73,
+            "y": 7,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 73,
+            "y": 7,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 73,
+            "y": 7,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 73,
+            "y": 7,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 73,
+            "y": 7,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 73,
+            "y": 7,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 8,
+            "y": 8,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 8,
+            "y": 8,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 8,
+            "y": 8,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 8,
+            "y": 8,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 8,
+            "y": 8,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 8,
+            "y": 8,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 8,
+            "y": 8,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 8,
+            "y": 8,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 8,
+            "y": 8,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 8,
+            "y": 8,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 8,
+            "y": 8,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 8,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 8,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 8,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 8,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 13,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 3,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 3,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 3,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 3,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 3,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 3,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 3,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 3,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 3,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 3,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 3,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 3,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 39,
+            "y": 3,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 44,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 44,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 44,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 44,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 44,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 44,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 59,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 59,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 59,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 59,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 59,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 59,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 59,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 59,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 78,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 78,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 78,
+            "y": 5,
+            "type": "class model.entities.Trap"
+        },
+        {
+            "x": 78,
+            "y": 5,
+            "type": "class model.entities.Trap"
         }
     ],
     "width": 80,
     "height": 24,
-    "x": 31,
-    "health": 85,
-    "y": 7
+    "x": 63,
+    "health": 4,
+    "y": 3
 }
