@@ -52,11 +52,13 @@ This is you: <br>
 Your objective: Survive endless hordes of enemies as long as possible.<br>
 </br>
 Enemies ('E') will spawn as soon as you perform one of the 5 commands:
-- Attack: "attack"
-- Move Up: "up"
-- Move Down: "down"
-- Move Left: "left"
-- Move Right: "right"
+- Attack: Space key
+- Move Up: UP arrow
+- Move Down: DOWN arrow
+- Move Left: LEFT arrow
+- Move Right: RIGHT arrow
+- Place Trap: t
+- Pause/Unpause: esc
 
 Enemies will then make one move every time you perform an action. Namely, they will constantly
 try to get closer to you. <br>
@@ -98,3 +100,15 @@ a + shape around your player is hit and any enemies in that area will be killed.
 
 Once you kill all enemies on screen, a new wave will appear. Try to survive
 as long as possible.
+
+# Instructions for Grader
+
+- You can add a trap to the world by (having the game unpaused and) pressing t. The trap will be under the player
+so it will not be immediately visible. Press the arrow keys to move around.
+- You can get rid of traps by maneuvering in such a way that enemies walk over the trap.
+- You can locate my visual component by pressing enter on the game over screen.
+- You can save the state of my application by pausing (press esc) and then pressing s.
+  - There is no visual feedback as of now but rest assured the game does save.
+- You can reload the last saved state by selecting yes when prompted at the start of the game.
+
+Launch from Main.java
