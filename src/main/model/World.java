@@ -3,6 +3,8 @@ package model;
 import model.entities.Enemy;
 import model.entities.TickedEntity;
 import model.entities.Trap;
+import model.logging.Event;
+import model.logging.EventLog;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
@@ -123,6 +125,18 @@ public class World implements Writable {
     // EFFECTS: spawns a trap at the given x and y coordinates
     public void spawnTrap(Trap trap) {
         activeTraps.add(trap);
+        
+        logTrap("Added trap at: ", trap);
+    }
+
+    // MODIFIES: EventLog.instance
+    // EFFECTS: Logs an event for a given trap. Appends the trap's coordinates to the end of eventDescription
+    private void logTrap(String eventDescription, Trap trap) {
+        EventLog log = EventLog.getInstance();
+
+        eventDescription += Integer.toString(trap.getX()) + ", " + Integer.toString(trap.getY());
+
+        log.logEvent(new Event(eventDescription));
     }
 
     // EFFECTS: returns whether e is active in the world
@@ -168,6 +182,8 @@ public class World implements Writable {
     // EFFECTS: removes the given trap from the world
     public void consumeTrap(Trap trap) {
         activeTraps.remove(trap); //MAKE SURE THIS IS BASED ON OBJECT ID AND NOT ANY EQUALS BULLSHIT
+
+        logTrap("Consumed trap at: ", trap);
     }
 
     // EFFECTS: returns a JSONObject with the world data

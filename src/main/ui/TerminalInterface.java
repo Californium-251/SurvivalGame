@@ -281,8 +281,5 @@ public class TerminalInterface {
             return getNextInput();
         }
     }
-
-
-
 }
 

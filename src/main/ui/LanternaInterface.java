@@ -20,11 +20,14 @@ import model.entities.Trap;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import java.awt.event.WindowAdapter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 /*
  * GUI Class.
@@ -33,7 +36,7 @@ import java.util.Set;
  *
  * Draws the game to screen and updates game.
  */
-public class LanternaInterface {
+public class LanternaInterface extends WindowAdapter {
     private static final String JSON_FILEPATH = "./data/savedGame.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -44,7 +47,7 @@ public class LanternaInterface {
     private boolean isGameOver = false;
     private boolean paused = false;
 
-    private static final int MAX_HEALTH = 100;
+    private static final int MAX_HEALTH = 1;
     private static final long TICKRATE = 10;
 
     private static final char ENEMY_ICON = 'E';
@@ -108,7 +111,7 @@ public class LanternaInterface {
         }
     }
 
-    // EFFECTS: gets the player input on whether or not they want to load
+    // EFFECTS: gets the player input on regardless of whether they want to load
     //          the game stored in file.
     private boolean displayStartScreen() {
         WindowBasedTextGUI startGUI = new MultiWindowTextGUI(screen);
@@ -151,6 +154,8 @@ public class LanternaInterface {
     private void initScreen() throws IOException {
         screen = new DefaultTerminalFactory().createScreen();
         screen.startScreen();
+
+        addWindowListener(this);
     }
 
     //EFFECTS: initializes json reader and writer objects
@@ -167,10 +172,13 @@ public class LanternaInterface {
             Thread.sleep(1000L / TICKRATE);
         }
 
+        endGame();
+    }
+
+    //EFFECTS: displays the image, then prints to console on program end.
+    private void endGame() {
         ImageDisplay endScreen = new ImageDisplay();
         endScreen.display();
-
-        //System.exit(0);
     }
 
     //EFFECTS: updates the game
@@ -186,7 +194,7 @@ public class LanternaInterface {
     }
 
     // MODIFIES: screen
-    // EFFECTS: updates screen with new gamestate
+    // EFFECTS: updates screen with new game state
     private void updateScreen() throws IOException {
         screen.setCursorPosition(new TerminalPosition(0, 0));
         screen.clear();
