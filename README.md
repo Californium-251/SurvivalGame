@@ -115,11 +115,23 @@ Launch from Main.java
 
 # Phase 4
 ## Task 2
-Wed Apr 03 13:15:38 PDT 2024| Added trap at: 40, 12
-Wed Apr 03 13:15:38 PDT 2024| Added trap at: 40, 11
-Wed Apr 03 13:15:40 PDT 2024| Added trap at: 41, 13
-Wed Apr 03 13:15:41 PDT 2024| Added trap at: 39, 13
-Wed Apr 03 13:15:43 PDT 2024| Consumed trap at: 40, 12
-Wed Apr 03 13:15:43 PDT 2024| Consumed trap at: 40, 11
+Sample console output from a game:
+
+Wed Apr 03 13:15:38 PDT 2024| Added trap at: 40, 12 <br>
+Wed Apr 03 13:15:38 PDT 2024| Added trap at: 40, 11 <br>
+Wed Apr 03 13:15:40 PDT 2024| Added trap at: 41, 13 <br>
+Wed Apr 03 13:15:41 PDT 2024| Added trap at: 39, 13 <br>
+Wed Apr 03 13:15:43 PDT 2024| Consumed trap at: 40, 12 <br>
+Wed Apr 03 13:15:43 PDT 2024| Consumed trap at: 40, 11 <br>
 
 ## Task 3
+Looking at the UML Diagram, you immediately notice that LanternaInterface is doing a lot. It has very poor cohesion.
+It is responsible for the updating of the game cycle, the display of the game, some game logic, and saving and loading.
+This could be separated into 3, potentially 4 classes. One would handle game updates and logic (could be separated if it gets too large), another
+the actual display, and the last, the saving and loading of the game.
+World could also be separated into an EnemyHandler and a TrapHandler, or the program design could be improved to just use a single TickedEntityHandler.
+
+There does currently exist a TickedEntity superclass of Trap and Enemy, but it does not get much use apart from defining a few abstract and concrete methods
+for its subclasses. It might be a good idea to move some of the logic from LanternaInterface regarding the difference between
+traps and enemies to this class and making it abstract, so Enemy and Trap each individually have to define their own logic which can then be called from a variable
+with apparent type TickedEntity. This would work to improve cohesion.
