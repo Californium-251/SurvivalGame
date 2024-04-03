@@ -32,6 +32,8 @@ public class World implements Writable {
     private final List<Enemy> activeEnemies = new ArrayList<>();
     private final List<Trap> activeTraps = new ArrayList<>();
 
+    private final EventLog log = EventLog.getInstance();
+
     // EFFECTS: instantiates a World with a given height and width
     //          in tiles.
     public World(int w, int h) {
@@ -132,9 +134,7 @@ public class World implements Writable {
     // MODIFIES: EventLog.instance
     // EFFECTS: Logs an event for a given trap. Appends the trap's coordinates to the end of eventDescription
     private void logTrap(String eventDescription, Trap trap) {
-        EventLog log = EventLog.getInstance();
-
-        eventDescription += Integer.toString(trap.getX()) + ", " + Integer.toString(trap.getY());
+        eventDescription += trap.getX() + ", " + trap.getY();
 
         log.logEvent(new Event(eventDescription));
     }
@@ -225,12 +225,8 @@ public class World implements Writable {
     public List<TickedEntity> getEntities() {
         List<TickedEntity> result = new ArrayList<>();
 
-        for (Enemy e : activeEnemies) {
-            result.add(e);
-        }
-        for (Trap t : activeTraps) {
-            result.add(t);
-        }
+        result.addAll(activeEnemies);
+        result.addAll(activeTraps);
 
         return result;
     }
