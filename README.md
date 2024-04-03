@@ -112,3 +112,14 @@ so it will not be immediately visible. Press the arrow keys to move around.
 - You can reload the last saved state by selecting yes when prompted at the start of the game.
 
 Launch from Main.java
+
+# Phase 4
+## Task 2
+Wed Apr 03 13:15:38 PDT 2024| Added trap at: 40, 12
+Wed Apr 03 13:15:38 PDT 2024| Added trap at: 40, 11
+Wed Apr 03 13:15:40 PDT 2024| Added trap at: 41, 13
+Wed Apr 03 13:15:41 PDT 2024| Added trap at: 39, 13
+Wed Apr 03 13:15:43 PDT 2024| Consumed trap at: 40, 12
+Wed Apr 03 13:15:43 PDT 2024| Consumed trap at: 40, 11
+
+## Task 3
