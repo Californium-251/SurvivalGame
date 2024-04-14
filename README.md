@@ -4,7 +4,7 @@
 
 This application is inspired by titles such as *Vampire Survivors* and *Soul Knight*.
 It will be a game about controlling a player that is faced against endless hordes of enemies.
-Your goal: upgrade your gear to survive as long as possible.
+Your goal: ~~upgrade your gear to~~ (To be implemented) survive as long as possible.
 
 ### Inspiration
 The idea for this project came about when I was thinking about
