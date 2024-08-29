@@ -1,5 +1,4 @@
-# Survival Thing
-
+# Survival Game
 ## Your second favorite vampire survivors ripoff
 
 This application is inspired by titles such as *Vampire Survivors* and *Soul Knight*.
